@@ -11,4 +11,4 @@ You can then access the app by navigating to 'localhost:8000' in your web browse
 - Left-click + Moving the Mouse = Rotation around cursor placement
 - Right-click + Moving the Mouse = Pan Up/Down/Left/Right
 - Mouse Wheel = Zoom In/Out
-- ↑↓←→ = Pan Up/Down/Left/Right (Same as Right-clicking)
+- ↑↓←→ Arrow keys = Pan Up/Down/Left/Right (Same as Right-clicking)
