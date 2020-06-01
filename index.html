@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+
+		<meta charset="utf-8">
+		<title>Testing Three.js</title>
+
+		<style>
+			body { margin: 0; }
+			canvas { display: block; }
+		</style>
+
+	</head>
+
+	<body>
+		<script src="https://threejs.org/build/three.js"></script>
+		<script src="js/examples/js/controls/OrbitControls.js"></script>
+		<script>
+			
+			// Create new scene.
+			let scene = new THREE.Scene();
+			
+			// Define a camera with a FOV of 100 deg, and an aspect ratio if width:height.
+			// Also near/far clipping plane. Objects > far && Objects < near won't render.
+			let camera = new THREE.PerspectiveCamera(
+				50, (window.innerWidth / window.innerHeight), 0.1, 1000
+			);
+
+			// Add camera to scene.
+			scene.add(camera);
+
+			// Position camera at z=30 and look downwards at origin.
+			camera.position.set(0,0,120);
+			camera.lookAt(0,0,0);
+			
+			// Create renderer.
+			let renderer = new THREE.WebGLRenderer();
+			
+			// Set size at which we render app.
+			renderer.setSize(window.innerWidth, window.innerHeight);
+
+			document.body.appendChild(renderer.domElement);
+
+			// Orbit Controls - Allows us to zoom in/out and pan.
+			let orbitControls = new THREE.OrbitControls(camera, renderer.domElement);
+
+			/**
+			 *
+			 * Create Earth Sphere
+			 *
+			**/
+
+			// Create sphere geometry with radius 8, and 25 width/height edges.
+			let earth_sphere_geometry = new THREE.SphereGeometry(8, 25, 25);
+			
+			// Set material color/mapping.
+            let earth_sphere_material = new THREE.MeshBasicMaterial({
+				map: new THREE.ImageUtils.loadTexture("images/earth.jpg")
+			});
+
+			// Create the actual sphere object with the geometry and material we specified.
+            let earth_sphere = new THREE.Mesh( earth_sphere_geometry, earth_sphere_material );
+
+			earth_sphere.position.set(95,0,0);
+
+			// Add the sphere to the scene.
+            scene.add(earth_sphere);
+
+			/**
+			 *
+			 * Create Moon Sphere - Attach to Earth
+			 *
+			**/
+
+			let moon_sphere_geometry = new THREE.SphereGeometry(3,25,25);
+
+			let moon_sphere_material = new THREE.MeshBasicMaterial({
+				map: new THREE.ImageUtils.loadTexture("images/moon.png")
+			});
+
+			let moon_sphere = new THREE.Mesh(moon_sphere_geometry, moon_sphere_material);
+
+			// Set moon position as close to Earth initially. But we will add
+			// it as Earth's child Object3D later.
+			moon_sphere.position.set(20,5,-3);
+
+			/**
+			 *
+			 * Create Sun Sphere - Parent of Earth
+			 *
+			**/
+
+			let sun_sphere_geometry = new THREE.SphereGeometry(20,30,30);
+
+			let sun_sphere_material = new THREE.MeshBasicMaterial({
+				map: new THREE.ImageUtils.loadTexture("images/sun.jpg")
+			});
+
+			let sun_sphere = new THREE.Mesh(sun_sphere_geometry, sun_sphere_material);
+
+			sun_sphere.position.set(0,0,0);
+
+			/**
+			 *
+			 * Create planet hierarchy: Sun -> Earth -> Moon
+			 *
+			**/
+
+			scene.add(sun_sphere);
+			sun_sphere.add(earth_sphere);
+			earth_sphere.add(moon_sphere);
+
+			/**
+			 *
+			 * Animate objects
+			 *
+			**/
+
+			function animate() {
+
+				requestAnimationFrame(animate);
+				renderer.render(scene, camera);
+				render();
+
+			}
+
+			/**
+			 *
+			 * Render function to keep animate clutter free.
+			 *
+			**/
+
+			function render() {
+
+				sun_sphere.rotation.y += 0.006;
+				earth_sphere.rotation.y += 0.016;
+				moon_sphere.rotation.y += 0.04;
+
+			}
+
+			animate();
+
+		</script>
+	</body>
+
+</html>
