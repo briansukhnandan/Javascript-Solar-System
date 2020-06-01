@@ -46,11 +46,11 @@
 			// Orbit Controls - Allows us to zoom in/out and pan.
 			let orbitControls = new THREE.OrbitControls(camera, renderer.domElement);
 
-			/**
-			 *
-			 * Adding Skybox.
-			 *
-			**/
+		/**
+			*
+			* Adding Skybox.
+			*
+		**/
 
 			let materialArray = [];
 
@@ -76,11 +76,11 @@
 			let skybox = new THREE.Mesh( skyboxGeo, materialArray );
 			scene.add( skybox );
 
-			/**
-			 *
-			 * Create Earth Sphere
-			 *
-			**/
+		/**
+			*
+			* Create Earth Sphere
+			*
+		**/
 
 			// Create sphere geometry with radius 8, and 25 width/height edges.
 			let earth_sphere_geometry = new THREE.SphereGeometry(10, 25, 25);
@@ -93,16 +93,16 @@
 			// Create the actual sphere object with the geometry and material we specified.
             let earth_sphere = new THREE.Mesh( earth_sphere_geometry, earth_sphere_material );
 
-			earth_sphere.position.set(340,0,0);
+			earth_sphere.position.set(370,0,0);
 
 			// Add the sphere to the scene.
             scene.add(earth_sphere);
 
-			/**
-			 *
-			 * Create Moon Sphere - Attach to Earth
-			 *
-			**/
+		/**
+			*
+			* Create Moon Sphere - Attach to Earth
+			*
+		**/
 
 			let moon_sphere_geometry = new THREE.SphereGeometry(3,25,25);
 
@@ -116,13 +116,13 @@
 			// it as Earth's child Object3D later.
 			moon_sphere.position.set(20,5,-3);
 
-			/**
-			 *
-			 * Create Sun Sphere - Parent of Earth
-			 *
-			**/
+		/**
+			*
+			* Create Sun Sphere - Parent of Earth
+			*
+		**/
 
-			let sun_sphere_geometry = new THREE.SphereGeometry(85,30,30);
+			let sun_sphere_geometry = new THREE.SphereGeometry(100,30,30);
 
 			let sun_sphere_material = new THREE.MeshBasicMaterial({
 				map: new THREE.ImageUtils.loadTexture("images/sun.jpg")
@@ -132,29 +132,29 @@
 
 			sun_sphere.position.set(0,0,0);
 
-			/**
-			 *
-			 * Create planet hierarchy: Sun -> Earth -> Moon
-			 *
-			**/
+		/**
+			*
+			* Create planet hierarchy: Sun -> Earth -> Moon
+			*
+		**/
 
 			scene.add(sun_sphere);
 			sun_sphere.add(earth_sphere);
 			earth_sphere.add(moon_sphere);
 
-			/**
-			 *
-			 * Create Pivot objects array.
-			 * POA[0] = Mercury
-			 * POA[1] = Venus
-			 * POA[2] = Mars
-			 * POA[3] = Jupiter
-			 * POA[4] = Saturn
-			 * POA[5] = Uranus
-			 * POA[6] = Neptune
-			 * POA[7] = Pluto
-			 *
-			**/
+		/**
+			*
+			* Create Pivot objects array.
+			* POA[0] = Mercury
+			* POA[1] = Venus
+			* POA[2] = Mars
+			* POA[3] = Jupiter
+			* POA[4] = Saturn
+			* POA[5] = Uranus
+			* POA[6] = Neptune
+			* POA[7] = Pluto
+			*
+		**/
 
 			let PivotObjectsArray = [];
 
@@ -175,11 +175,11 @@
 				scene.add(PivotObjectsArray[i]);
 			}
 
-			/**
-			 *
-			 * Adding Mercury (temp pivot obj + planet).
-			 *
-			**/
+		/**
+			*
+			* Adding Mercury (temp pivot obj + planet).
+			*
+		**/
 
 			let mercury_geometry = new THREE.SphereGeometry(3.3,30,30);
 
@@ -189,15 +189,15 @@
 
 			let mercury_sphere = new THREE.Mesh(mercury_geometry, mercury_material);
 
-			mercury_sphere.position.set(140,0,0);
+			mercury_sphere.position.set(170,0,0);
 
 			PivotObjectsArray[0].add(mercury_sphere);
 
-			/**
-			 *
-			 * Adding Venus (temp pivot obj + planet).
-			 *
-			**/
+		/**
+			*
+			* Adding Venus (temp pivot obj + planet).
+			*
+		**/
 
 			let venus_geometry = new THREE.SphereGeometry(9.5,30,30);
 
@@ -207,16 +207,16 @@
 
 			let venus_sphere = new THREE.Mesh(venus_geometry, venus_material);
 
-			venus_sphere.position.set(250,0,0);
+			venus_sphere.position.set(280,0,0);
 
 			PivotObjectsArray[1].add(venus_sphere);
 
 
-			/**
-			 *
-			 * Adding Mars (temp pivot obj + planet).
-			 *
-			**/
+		/**
+			*
+			* Adding Mars (temp pivot obj + planet).
+			*
+		**/
 
 			let mars_geometry = new THREE.SphereGeometry(9.5,30,30);
 
@@ -226,15 +226,15 @@
 
 			let mars_sphere = new THREE.Mesh(mars_geometry, mars_material);
 
-			mars_sphere.position.set(460,0,0);
+			mars_sphere.position.set(490,0,0);
 
 			PivotObjectsArray[2].add(mars_sphere);
 
-			/**
-			 *
-			 * Adding Mars Moons.
-			 *
-			**/
+		/**
+			*
+			* Adding Mars Moons.
+			*
+		**/
 
 			let MarsMoons = [];
 
@@ -254,12 +254,62 @@
 			MarsMoons[0].position.set(20,5,-3);
 			MarsMoons[1].position.set(17,8,5);
 
+		/**
+			*
+			* Adding Jupiter (temp pivot obj + planet).
+			*
+		**/
 
-			/**
-			 *
-			 * Animate objects
-			 *
-			**/
+			let jupiter_geometry = new THREE.SphereGeometry(45,30,30);
+
+			let jupiter_material = new THREE.MeshBasicMaterial({
+				map: new THREE.ImageUtils.loadTexture("images/jupiter.jpg")
+			});
+
+			let jupiter_sphere = new THREE.Mesh(jupiter_geometry, jupiter_material);
+
+			jupiter_sphere.position.set(710,0,0);
+
+			PivotObjectsArray[3].add(jupiter_sphere);
+
+		/**
+			*
+			* Adding 10 of Jupiter's Moons.
+			*
+		**/
+
+			let JupiterMoons = [];
+
+			var i;
+			for (i = 0; i < 10; i++) {
+				
+				let tmp_geometry = new THREE.SphereGeometry(3.5,30,30);
+				
+				let tmp_material = new THREE.MeshBasicMaterial({
+					map: new THREE.ImageUtils.loadTexture("images/europa.jpg")
+									});
+
+				JupiterMoons.push(new THREE.Mesh(tmp_geometry, tmp_material))
+				jupiter_sphere.add(JupiterMoons[i]);
+			}
+
+			JupiterMoons[0].position.set(72,5,-3);
+			JupiterMoons[1].position.set(-97,-45,-5);
+			JupiterMoons[2].position.set(90,-25,-12);
+			JupiterMoons[3].position.set(-80,8,5);
+			JupiterMoons[4].position.set(0,-70,-3);
+			JupiterMoons[5].position.set(0,10,75);
+			JupiterMoons[6].position.set(65,-10,65);
+			JupiterMoons[7].position.set(0,10,-75);
+			JupiterMoons[8].position.set(0,-20,-70);
+			JupiterMoons[9].position.set(0,-20,75);
+
+
+		/**
+			*
+			* Animate objects
+			*
+		**/
 
 			function animate() {
 
@@ -269,11 +319,11 @@
 
 			}
 
-			/**
-			 *
-			 * Render function to keep animate clutter free.
-			 *
-			**/
+		/**
+			*
+			* Render function to keep animate clutter free.
+			*
+		**/
 
 			function render() {
 				
@@ -286,7 +336,9 @@
 
 				// Planets
 				mercury_sphere.rotation.y += .00034;
-				venus_sphere.rotation.y += .00034;
+				venus_sphere.rotation.y += .000082;
+				mars_sphere.rotation.y += .018;
+				jupiter_sphere.rotation.y += .045;
 
 				// Pivot Objects
 				PivotObjectsArray[0].rotation.y += 0.024; // Mercury
@@ -301,6 +353,12 @@
 				// Mars Moon rotations
 				MarsMoons[0].rotation.y += 0.2;
 				MarsMoons[1].rotation.y += 0.2;
+
+				// Jupiter Moon rotations
+				var i;
+				for (i = 0; i < 10; i++) {
+					JupiterMoons[i].rotation.y += 0.4;
+				}
 				
 
 			}
