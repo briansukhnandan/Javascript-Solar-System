@@ -20,11 +20,9 @@
 			class Planet {
 
 				constructor(name, geometry, material) {
-
 					this.name = name;
 					this.geometry = geometry;
 					this.material = material;
-
 				}
 
 				construct_planet(x,y,z) {
@@ -38,11 +36,9 @@
 			class Orbit_Outline {
 
 				constructor(geometry, material, rotation_angle) {
-
 					this.geometry = geometry;
 					this.material = material;
 					this.rotation_angle = rotation_angle;
-
 				}
 
 				construct_orbit() {
@@ -232,16 +228,15 @@
 			*
 		**/
 
-			let moon_sphere_geometry = new THREE.SphereGeometry(3,25,25);
+			let EarthMoons = generate_Moons(		
+				1, 
+				new THREE.SphereGeometry(4.5,30,30),
+				new THREE.MeshBasicMaterial({
+					map: new THREE.ImageUtils.loadTexture("images/moon.png")
+				})
+			);
 
-			let moon_sphere_material = new THREE.MeshBasicMaterial({
-				map: new THREE.ImageUtils.loadTexture("images/moon.png")
-			});
-
-			let moon_sphere = new THREE.Mesh(moon_sphere_geometry, moon_sphere_material);
-
-			Earth.add(moon_sphere);
-
+			for (i = 0; i < 1; i++) { Earth.add(EarthMoons[i]); }
 
 		/**
 			*
@@ -297,7 +292,7 @@
 
 			let JupiterMoons = generate_Moons(
 				10,
-				new THREE.SphereGeometry(3.5,30,30),
+				new THREE.SphereGeometry(4.2,30,30),
 				new THREE.MeshBasicMaterial({
 					map: new THREE.ImageUtils.loadTexture("images/europa.jpg")
 				})
@@ -438,15 +433,34 @@
 			*
 		**/
 
-			let charon_geometry = new THREE.SphereGeometry(.85,25,25);
+			let PlutoMoons = generate_Moons(
+				1,
+				new THREE.SphereGeometry(2.5,30,30),
+				new THREE.MeshBasicMaterial({
+					map: new THREE.ImageUtils.loadTexture("images/charon.jpg")
+				})
+			);
 
-			let charon_sphere_material = new THREE.MeshBasicMaterial({
-				map: new THREE.ImageUtils.loadTexture("images/moon.png")
-			});
+			for (i = 0; i < 1; i++) { Pluto.add(PlutoMoons[i]); }
 
-			let charon_sphere = new THREE.Mesh(charon_geometry, charon_sphere_material);
+		/**
+			*
+			* Keep a list of planets, for later.
+			*
+		**/
 
-			Pluto.add(charon_sphere);
+			let Planet_List = [
+
+				Mercury, 
+				Venus, 
+				Earth, 
+				Mars, 
+				Saturn, 
+				Uranus, 
+				Neptune, 
+				Pluto
+
+			];
 
 		/**
 			*
@@ -470,51 +484,51 @@
 			*
 		**/
 
-			moon_sphere.position.set(20,5,-3);
+			EarthMoons[0].position.set(40,6,-3);
 
 			MarsMoons[0].position.set(20,5,-3);
 			MarsMoons[1].position.set(17,8,5);
 
-			JupiterMoons[0].position.set(72,5,-3);
-			JupiterMoons[1].position.set(-97,-45,-5);
-			JupiterMoons[2].position.set(90,-25,-12);
-			JupiterMoons[3].position.set(-80,8,5);
-			JupiterMoons[4].position.set(0,-70,-3);
-			JupiterMoons[5].position.set(0,10,75);
-			JupiterMoons[6].position.set(65,-10,65);
-			JupiterMoons[7].position.set(0,10,-75);
-			JupiterMoons[8].position.set(0,-20,-70);
-			JupiterMoons[9].position.set(0,-20,75);
+			JupiterMoons[0].position.set(150,5,-3);
+			JupiterMoons[1].position.set(-197,-25,-5);
+			JupiterMoons[2].position.set(160,-25,-12);
+			JupiterMoons[3].position.set(-180,58,5);
+			JupiterMoons[4].position.set(0,-170,-3);
+			JupiterMoons[5].position.set(0,100,75);
+			JupiterMoons[6].position.set(165,-10,165);
+			JupiterMoons[7].position.set(0,100,-175);
+			JupiterMoons[8].position.set(0,-120,-70);
+			JupiterMoons[9].position.set(0,-20,175);
 
-			SaturnMoons[0].position.set(72,5,-3);
-			SaturnMoons[1].position.set(-97,-45,-5);
-			SaturnMoons[2].position.set(90,-25,-12);
-			SaturnMoons[3].position.set(-80,8,5);
-			SaturnMoons[4].position.set(0,-70,-3);
-			SaturnMoons[5].position.set(0,10,75);
-			SaturnMoons[6].position.set(65,-10,65);
-			SaturnMoons[7].position.set(0,10,-75);
-			SaturnMoons[8].position.set(0,-20,-70);
-			SaturnMoons[9].position.set(0,-20,75);
+			SaturnMoons[0].position.set(172,5,-3);
+			SaturnMoons[1].position.set(-97,-145,-5);
+			SaturnMoons[2].position.set(190,-125,-12);
+			SaturnMoons[3].position.set(-80,18,105);
+			SaturnMoons[4].position.set(0,-170,-130);
+			SaturnMoons[5].position.set(0,100,175);
+			SaturnMoons[6].position.set(165,-120,165);
+			SaturnMoons[7].position.set(100,100,-75);
+			SaturnMoons[8].position.set(0,-120,-170);
+			SaturnMoons[9].position.set(0,-120,175);
 
-			UranusMoons[0].position.set(72,5,-3);
-			UranusMoons[1].position.set(-97,-45,-5);
-			UranusMoons[2].position.set(90,-25,-12);
+			UranusMoons[0].position.set(112,45,-3);
+			UranusMoons[1].position.set(-97,-115,-5);
+			UranusMoons[2].position.set(90,-75,-12);
 			UranusMoons[3].position.set(-80,8,5);
 			UranusMoons[4].position.set(0,-70,-3);
 
-			NeptuneMoons[0].position.set(72,5,-3);
-			NeptuneMoons[1].position.set(-97,-45,-5);
-			NeptuneMoons[2].position.set(90,-25,-12);
-			NeptuneMoons[3].position.set(-80,8,5);
+			NeptuneMoons[0].position.set(112,5,-3);
+			NeptuneMoons[1].position.set(-97,-85,-5);
+			NeptuneMoons[2].position.set(90,-65,-12);
+			NeptuneMoons[3].position.set(-80,80,5);
 			NeptuneMoons[4].position.set(0,-70,-3);
 			NeptuneMoons[5].position.set(0,10,75);
 			NeptuneMoons[6].position.set(65,-10,65);
 			NeptuneMoons[7].position.set(0,10,-75);
-			NeptuneMoons[8].position.set(0,-20,-70);
-			NeptuneMoons[9].position.set(0,-20,75);
+			NeptuneMoons[8].position.set(0,-60,-70);
+			NeptuneMoons[9].position.set(0,-60,75);
 
-			charon_sphere.position.set(10,5,-3);
+			PlutoMoons[0].position.set(10,5,-3);
 
 		/**
 			*
@@ -529,7 +543,6 @@
 				}),
 				Math.PI/2
 			).construct_orbit();
-			Sun.add(Mercury_Orbit);
 			
 			let Venus_Orbit = new Orbit_Outline(
 				new THREE.RingGeometry( 750, 749.5, 256 ),
@@ -538,7 +551,6 @@
 				}),
 				Math.PI/2
 			).construct_orbit();
-			Sun.add(Venus_Orbit);
 
 			let Earth_Orbit = new Orbit_Outline(
 				new THREE.RingGeometry( 1130, 1129.5, 256 ),
@@ -547,7 +559,6 @@
 				}),
 				Math.PI/2
 			).construct_orbit();
-			Sun.add(Earth_Orbit);
 
 			let Mars_Orbit = new Orbit_Outline(
 				new THREE.RingGeometry( 1530, 1529.5, 256 ),
@@ -556,7 +567,6 @@
 				}),
 				Math.PI/2
 			).construct_orbit();
-			Sun.add(Mars_Orbit);
 
 			let Jupiter_Orbit = new Orbit_Outline(
 				new THREE.RingGeometry( 2180, 2179.5, 256 ),
@@ -565,7 +575,6 @@
 				}),
 				Math.PI/2
 			).construct_orbit();
-			Sun.add(Jupiter_Orbit);
 
 			let Saturn_Orbit = new Orbit_Outline(
 				new THREE.RingGeometry( 2880, 2879.5, 256 ),
@@ -574,7 +583,6 @@
 				}),
 				Math.PI/2
 			).construct_orbit();
-			Sun.add(Saturn_Orbit);
 
 			let Uranus_Orbit = new Orbit_Outline(
 				new THREE.RingGeometry( 3680, 3679.5, 256 ),
@@ -583,7 +591,6 @@
 				}),
 				Math.PI/2
 			).construct_orbit();
-			Sun.add(Uranus_Orbit);
 
 			let Neptune_Orbit = new Orbit_Outline(
 				new THREE.RingGeometry( 4580, 4579.5, 256 ),
@@ -592,7 +599,6 @@
 				}),
 				Math.PI/2
 			).construct_orbit();
-			Sun.add(Neptune_Orbit);
 
 			let Pluto_Orbit = new Orbit_Outline(
 				new THREE.RingGeometry( 5580, 5579.5, 256 ),
@@ -601,6 +607,21 @@
 				}),
 				Math.PI/2
 			).construct_orbit();
+
+		/**
+			*
+			* Add all orbit objects
+			*
+		**/
+
+			Sun.add(Mercury_Orbit);
+			Sun.add(Venus_Orbit);
+			Sun.add(Earth_Orbit);
+			Sun.add(Mars_Orbit);
+			Sun.add(Jupiter_Orbit);
+			Sun.add(Saturn_Orbit);
+			Sun.add(Uranus_Orbit);
+			Sun.add(Neptune_Orbit);
 			Sun.add(Pluto_Orbit);
 
 		/**
@@ -610,11 +631,9 @@
 		**/
 
 			function animate() {
-
 				requestAnimationFrame(animate);
 				renderer.render(scene, camera);
 				render();
-
 			}
 
 		/**
@@ -629,7 +648,7 @@
 
 				// Benchmark: 1 Earth day = 0.02
 				Earth.rotation.y += 0.02;
-				moon_sphere.rotation.y += 0.2;
+				EarthMoons[0].rotation.y += 0.2;
 
 				// Planets
 				Mercury.rotation.y += .00034;
