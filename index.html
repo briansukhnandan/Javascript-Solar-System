@@ -35,6 +35,24 @@
 
 			}
 
+			class Orbit_Outline {
+
+				constructor(geometry, material, rotation_angle) {
+
+					this.geometry = geometry;
+					this.material = material;
+					this.rotation_angle = rotation_angle;
+
+				}
+
+				construct_orbit() {
+					let tmp = new THREE.Mesh(this.geometry, this.material);
+					tmp.rotateX(this.rotation_angle);
+					return tmp;
+				}
+
+			}
+
 			function generate_Moons(n, geometry, material) {
 
 				let moon_list = [];
@@ -57,14 +75,14 @@
 			// Define a camera with a FOV of 100 deg, and an aspect ratio if width:height.
 			// Also near/far clipping plane. Objects > far && Objects < near won't render.
 			let camera = new THREE.PerspectiveCamera(
-				50, (window.innerWidth / window.innerHeight), 0.1, 9000
+				50, (window.innerWidth / window.innerHeight), 0.1, 20000
 			);
 
 			// Add camera to scene.
 			scene.add(camera);
 
 			// Position camera at z=30 and look downwards at origin.
-			camera.position.set(0,0,300);
+			camera.position.set(-2000,800,1500);
 			camera.lookAt(0,0,0);
 			
 			// Create renderer.
@@ -77,6 +95,10 @@
 
 			// Orbit Controls - Allows us to zoom in/out and pan.
 			let orbitControls = new THREE.OrbitControls(camera, renderer.domElement);
+			
+			// Set min/max distance to avoid zooming out of skybox.
+			orbitControls.minDistance = 0.1;
+			orbitControls.maxDistance = 20000;
 
 		/**
 			*
@@ -104,7 +126,7 @@
 				materialArray[i].side = THREE.BackSide;
 			}
 
-			let skyboxGeo = new THREE.BoxGeometry( 10000, 10000, 10000);
+			let skyboxGeo = new THREE.BoxGeometry( 20000, 20000, 20000);
 			let skybox = new THREE.Mesh( skyboxGeo, materialArray );
 			scene.add( skybox );
 
@@ -151,13 +173,43 @@
 
 			let Sun = new Planet(
 				"Sun",
-				new THREE.SphereGeometry(100,30,30),
+				new THREE.SphereGeometry(225,30,30),
 				new THREE.MeshBasicMaterial({
 					map: new THREE.ImageUtils.loadTexture("images/sun.jpg")
 				}),
 			).construct_planet(0,0,0);
 
 			scene.add(Sun);
+
+		/**
+			*
+			* Adding Mercury (temp pivot obj + planet).
+			*
+		**/
+
+			// Create planet from constructor.
+			let Mercury = new Planet(
+				"Mercury", // Name
+				new THREE.SphereGeometry(7.6,30,30), // Geometry.
+				new THREE.MeshBasicMaterial({ // Material
+					map: new THREE.ImageUtils.loadTexture("images/mercury.jpg")
+				})
+			).construct_planet(400,0,0);
+
+		/**
+			*
+			* Adding Venus (temp pivot obj + planet).
+			*
+		**/
+
+			// Create planet from constructor.
+			let Venus = new Planet(
+				"Venus", // Name
+				new THREE.SphereGeometry(19,30,30), // Geometry.
+				new THREE.MeshBasicMaterial({ // Material
+					map: new THREE.ImageUtils.loadTexture("images/venus.png")
+				})
+			).construct_planet(750, 0, 0);
 
 		/**
 			*
@@ -168,18 +220,15 @@
 			// Create planet from constructor.
 			let Earth = new Planet(
 				"Earth", // Name
-				new THREE.SphereGeometry(10, 25, 25), // Geometry.
+				new THREE.SphereGeometry(20, 25, 25), // Geometry.
 				new THREE.MeshBasicMaterial({ // Material
 					map: new THREE.ImageUtils.loadTexture("images/earth.jpg")
 				})
-			).construct_planet(370,0,0);
-
-			// Add the sphere to the scene.
-			PivotObjectsArray[8].add(Earth);
+			).construct_planet(1130,0,0);
 
 		/**
 			*
-			* Create Moon Sphere - Attach to Earth
+			* Create Earth's Moon.
 			*
 		**/
 
@@ -193,40 +242,6 @@
 
 			Earth.add(moon_sphere);
 
-		/**
-			*
-			* Adding Mercury (temp pivot obj + planet).
-			*
-		**/
-
-			// Create planet from constructor.
-			let Mercury = new Planet(
-				"Mercury", // Name
-				new THREE.SphereGeometry(3.3,30,30), // Geometry.
-				new THREE.MeshBasicMaterial({ // Material
-					map: new THREE.ImageUtils.loadTexture("images/mercury.jpg")
-				})
-			).construct_planet(170,0,0);
-
-			PivotObjectsArray[0].add(Mercury);
-
-		/**
-			*
-			* Adding Venus (temp pivot obj + planet).
-			*
-		**/
-
-			// Create planet from constructor.
-			let Venus = new Planet(
-				"Venus", // Name
-				new THREE.SphereGeometry(9.5,30,30), // Geometry.
-				new THREE.MeshBasicMaterial({ // Material
-					map: new THREE.ImageUtils.loadTexture("images/venus.png")
-				})
-			).construct_planet(280, 0, 0);
-
-			PivotObjectsArray[1].add(Venus);
-
 
 		/**
 			*
@@ -237,13 +252,11 @@
 			// Create planet from constructor.
 			let Mars = new Planet(
 				"Mars", // Name
-				new THREE.SphereGeometry(9.5,30,30), // Geometry.
+				new THREE.SphereGeometry(10.6,30,30), // Geometry.
 				new THREE.MeshBasicMaterial({ // Material
 					map: new THREE.ImageUtils.loadTexture("images/mars.png")
 				})
-			).construct_planet(490, 0, 0);
-
-			PivotObjectsArray[2].add(Mars);
+			).construct_planet(1530, 0, 0);
 
 		/**
 			*
@@ -270,13 +283,11 @@
 			// Create planet from constructor.
 			let Jupiter = new Planet(
 				"Jupiter", // Name
-				new THREE.SphereGeometry(45,30,30), // Geometry.
+				new THREE.SphereGeometry(100,30,30), // Geometry.
 				new THREE.MeshBasicMaterial({ // Material
 					map: new THREE.ImageUtils.loadTexture("images/jupiter.jpg")
 				})
-			).construct_planet(710,0,0);
-
-			PivotObjectsArray[3].add(Jupiter);
+			).construct_planet(2180,0,0);
 
 		/**
 			*
@@ -303,13 +314,11 @@
 			// Create planet from constructor.
 			let Saturn = new Planet(
 				"Saturn", // Name
-				new THREE.SphereGeometry(36,30,30), // Geometry.
+				new THREE.SphereGeometry(92,30,30), // Geometry.
 				new THREE.MeshBasicMaterial({ // Material
 					map: new THREE.ImageUtils.loadTexture("images/saturn.jpg")
 				})
-			).construct_planet(1070,0,0);
-
-			PivotObjectsArray[4].add(Saturn);
+			).construct_planet(2880,0,0);
 
 		/**
 			*
@@ -317,7 +326,7 @@
 			*
 		**/
 
-			let saturn_ring_geometry = new THREE.RingGeometry(68, 10, 32);
+			let saturn_ring_geometry = new THREE.RingGeometry(192, 112, 32);
 
 			let saturn_ring_material = new THREE.MeshBasicMaterial({ 
 				map: new THREE.ImageUtils.loadTexture("images/saturn_ring.jpg"), 
@@ -327,8 +336,8 @@
 			let saturn_ring = new THREE.Mesh(saturn_ring_geometry, saturn_ring_material);
 
 			saturn_ring.rotateX(0.8);
-			saturn_ring.position.set(1070,0,0);
-			PivotObjectsArray[4].add(saturn_ring);
+			saturn_ring.position.set(2880,0,0);
+			PivotObjectsArray[5].add(saturn_ring);
 
 		/**
 			*
@@ -355,13 +364,11 @@
 			// Create planet from constructor.
 			let Uranus = new Planet(
 				"Uranus", // Name
-				new THREE.SphereGeometry(27,30,30), // Geometry.
+				new THREE.SphereGeometry(64,30,30), // Geometry.
 				new THREE.MeshBasicMaterial({ // Material
 					map: new THREE.ImageUtils.loadTexture("images/uranus.jpg")
 				})
-			).construct_planet(1510,0,0);	
-
-			PivotObjectsArray[5].add(Uranus);
+			).construct_planet(3680,0,0);	
 
 		/**
 			*
@@ -388,14 +395,11 @@
 			// Create planet from constructor.
 			let Neptune = new Planet(
 				"Neptune", // Name
-				new THREE.SphereGeometry(25,30,30), // Geometry.
+				new THREE.SphereGeometry(60,30,30), // Geometry.
 				new THREE.MeshBasicMaterial({ // Material
 					map: new THREE.ImageUtils.loadTexture("images/neptune.jpg")
 				})
-			).construct_planet(1980,0,0);
-
-			PivotObjectsArray[6].add(Neptune);
-
+			).construct_planet(4580,0,0);
 		
 		/**
 			*
@@ -422,17 +426,15 @@
 			// Create planet from constructor.
 			let Pluto = new Planet(
 				"Pluto", // Name
-				new THREE.SphereGeometry(1.7,30,30), // Geometry.
+				new THREE.SphereGeometry(5,30,30), // Geometry.
 				new THREE.MeshBasicMaterial({ // Material
 					map: new THREE.ImageUtils.loadTexture("images/pluto.jpg")
 				})
-			).construct_planet(2530,0,0);
-
-			PivotObjectsArray[7].add(Pluto);
+			).construct_planet(5580,0,0);
 
 		/**
 			*
-			* Last but not least, Charon.
+			* Add Charon, Pluto's only moon.
 			*
 		**/
 
@@ -445,6 +447,22 @@
 			let charon_sphere = new THREE.Mesh(charon_geometry, charon_sphere_material);
 
 			Pluto.add(charon_sphere);
+
+		/**
+			*
+			* Set all pivot objects.
+			*
+		**/
+
+			PivotObjectsArray[0].add(Mercury);
+			PivotObjectsArray[1].add(Venus);
+			PivotObjectsArray[2].add(Earth);
+			PivotObjectsArray[3].add(Mars);
+			PivotObjectsArray[4].add(Jupiter);
+			PivotObjectsArray[5].add(Saturn);
+			PivotObjectsArray[6].add(Uranus);
+			PivotObjectsArray[7].add(Neptune);
+			PivotObjectsArray[8].add(Pluto);
 
 		/**
 			*
@@ -500,6 +518,93 @@
 
 		/**
 			*
+			* Create and set positions for all orbit indications.
+			*
+		**/
+
+			let Mercury_Orbit = new Orbit_Outline(
+				new THREE.RingGeometry( 400, 399.5, 256 ),
+				new THREE.MeshBasicMaterial({
+					color: 0xfffdfb, side: THREE.DoubleSide
+				}),
+				Math.PI/2
+			).construct_orbit();
+			Sun.add(Mercury_Orbit);
+			
+			let Venus_Orbit = new Orbit_Outline(
+				new THREE.RingGeometry( 750, 749.5, 256 ),
+				new THREE.MeshBasicMaterial({
+					color: 0xfffdfb, side: THREE.DoubleSide
+				}),
+				Math.PI/2
+			).construct_orbit();
+			Sun.add(Venus_Orbit);
+
+			let Earth_Orbit = new Orbit_Outline(
+				new THREE.RingGeometry( 1130, 1129.5, 256 ),
+				new THREE.MeshBasicMaterial({
+					color: 0xfffdfb, side: THREE.DoubleSide
+				}),
+				Math.PI/2
+			).construct_orbit();
+			Sun.add(Earth_Orbit);
+
+			let Mars_Orbit = new Orbit_Outline(
+				new THREE.RingGeometry( 1530, 1529.5, 256 ),
+				new THREE.MeshBasicMaterial({
+					color: 0xfffdfb, side: THREE.DoubleSide
+				}),
+				Math.PI/2
+			).construct_orbit();
+			Sun.add(Mars_Orbit);
+
+			let Jupiter_Orbit = new Orbit_Outline(
+				new THREE.RingGeometry( 2180, 2179.5, 256 ),
+				new THREE.MeshBasicMaterial({
+					color: 0xfffdfb, side: THREE.DoubleSide
+				}),
+				Math.PI/2
+			).construct_orbit();
+			Sun.add(Jupiter_Orbit);
+
+			let Saturn_Orbit = new Orbit_Outline(
+				new THREE.RingGeometry( 2880, 2879.5, 256 ),
+				new THREE.MeshBasicMaterial({
+					color: 0xfffdfb, side: THREE.DoubleSide
+				}),
+				Math.PI/2
+			).construct_orbit();
+			Sun.add(Saturn_Orbit);
+
+			let Uranus_Orbit = new Orbit_Outline(
+				new THREE.RingGeometry( 3680, 3679.5, 256 ),
+				new THREE.MeshBasicMaterial({
+					color: 0xfffdfb, side: THREE.DoubleSide
+				}),
+				Math.PI/2
+			).construct_orbit();
+			Sun.add(Uranus_Orbit);
+
+			let Neptune_Orbit = new Orbit_Outline(
+				new THREE.RingGeometry( 4580, 4579.5, 256 ),
+				new THREE.MeshBasicMaterial({
+					color: 0xfffdfb, side: THREE.DoubleSide
+				}),
+				Math.PI/2
+			).construct_orbit();
+			Sun.add(Neptune_Orbit);
+
+			let Pluto_Orbit = new Orbit_Outline(
+				new THREE.RingGeometry( 5580, 5579.5, 256 ),
+				new THREE.MeshBasicMaterial({
+					color: 0xfffdfb, side: THREE.DoubleSide
+				}),
+				Math.PI/2
+			).construct_orbit();
+			Sun.add(Pluto_Orbit);
+
+		/**
+			*
 			* Animate objects
 			*
 		**/
@@ -542,13 +647,13 @@
 				// Pivot Objects
 				PivotObjectsArray[0].rotation.y += 0.024; // Mercury
 				PivotObjectsArray[1].rotation.y += 0.009; // Venus
-				PivotObjectsArray[2].rotation.y += 0.0035; // Mars
-				PivotObjectsArray[3].rotation.y += 0.00054; // Jupiter
-				PivotObjectsArray[4].rotation.y += 0.00020; // Saturn
-				PivotObjectsArray[5].rotation.y += 0.00007; // Uranus
-				PivotObjectsArray[6].rotation.y += 0.000035; // Neptune
-				PivotObjectsArray[7].rotation.y += 0.000023; // Pluto
-				PivotObjectsArray[8].rotation.y += 0.006; // Earth
+				PivotObjectsArray[2].rotation.y += 0.006; // Earth
+				PivotObjectsArray[3].rotation.y += 0.0035; // Mars
+				PivotObjectsArray[4].rotation.y += 0.00054; // Jupiter
+				PivotObjectsArray[5].rotation.y += 0.00020; // Saturn
+				PivotObjectsArray[6].rotation.y += 0.00007; // Uranus
+				PivotObjectsArray[7].rotation.y += 0.000035; // Neptune
+				PivotObjectsArray[8].rotation.y += 0.000023; // Pluto
 
 				// Mars Moon rotations
 				MarsMoons[0].rotation.y += 0.2;
