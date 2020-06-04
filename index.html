@@ -149,17 +149,15 @@
 			*
 		**/
 
-			let sun_sphere_geometry = new THREE.SphereGeometry(100,30,30);
+			let Sun = new Planet(
+				"Sun",
+				new THREE.SphereGeometry(100,30,30),
+				new THREE.MeshBasicMaterial({
+					map: new THREE.ImageUtils.loadTexture("images/sun.jpg")
+				}),
+			).construct_planet(0,0,0);
 
-			let sun_sphere_material = new THREE.MeshBasicMaterial({
-				map: new THREE.ImageUtils.loadTexture("images/sun.jpg")
-			});
-
-			let sun_sphere = new THREE.Mesh(sun_sphere_geometry, sun_sphere_material);
-
-			sun_sphere.position.set(0,0,0);
-
-			scene.add(sun_sphere);
+			scene.add(Sun);
 
 		/**
 			*
@@ -174,13 +172,10 @@
 				new THREE.MeshBasicMaterial({ // Material
 					map: new THREE.ImageUtils.loadTexture("images/earth.jpg")
 				})
-			)
-
-			// Create the actual sphere object with the geometry and material we specified.
-            let earth_sphere = Earth.construct_planet(370,0,0);
+			).construct_planet(370,0,0);
 
 			// Add the sphere to the scene.
-			PivotObjectsArray[8].add(earth_sphere);
+			PivotObjectsArray[8].add(Earth);
 
 		/**
 			*
@@ -196,7 +191,7 @@
 
 			let moon_sphere = new THREE.Mesh(moon_sphere_geometry, moon_sphere_material);
 
-			earth_sphere.add(moon_sphere);
+			Earth.add(moon_sphere);
 
 		/**
 			*
@@ -211,11 +206,9 @@
 				new THREE.MeshBasicMaterial({ // Material
 					map: new THREE.ImageUtils.loadTexture("images/mercury.jpg")
 				})
-			)
+			).construct_planet(170,0,0);
 
-			let mercury_sphere = Mercury.construct_planet(170,0,0);
-
-			PivotObjectsArray[0].add(mercury_sphere);
+			PivotObjectsArray[0].add(Mercury);
 
 		/**
 			*
@@ -230,11 +223,9 @@
 				new THREE.MeshBasicMaterial({ // Material
 					map: new THREE.ImageUtils.loadTexture("images/venus.png")
 				})
-			)
+			).construct_planet(280, 0, 0);
 
-			let venus_sphere = Venus.construct_planet(280, 0, 0);
-
-			PivotObjectsArray[1].add(venus_sphere);
+			PivotObjectsArray[1].add(Venus);
 
 
 		/**
@@ -250,11 +241,9 @@
 				new THREE.MeshBasicMaterial({ // Material
 					map: new THREE.ImageUtils.loadTexture("images/mars.png")
 				})
-			)
+			).construct_planet(490, 0, 0);
 
-			let mars_sphere = Mars.construct_planet(490, 0, 0);
-
-			PivotObjectsArray[2].add(mars_sphere);
+			PivotObjectsArray[2].add(Mars);
 
 		/**
 			*
@@ -270,7 +259,7 @@
 				})
 			);
 
-			for (i = 0; i < 2; i++) { mars_sphere.add(MarsMoons[i]); }
+			for (i = 0; i < 2; i++) { Mars.add(MarsMoons[i]); }
 
 		/**
 			*
@@ -285,11 +274,9 @@
 				new THREE.MeshBasicMaterial({ // Material
 					map: new THREE.ImageUtils.loadTexture("images/jupiter.jpg")
 				})
-			)		
+			).construct_planet(710,0,0);
 
-			let jupiter_sphere = Jupiter.construct_planet(710,0,0);
-
-			PivotObjectsArray[3].add(jupiter_sphere);
+			PivotObjectsArray[3].add(Jupiter);
 
 		/**
 			*
@@ -305,7 +292,7 @@
 				})
 			);
 
-			for (i = 0; i < 10; i++) { jupiter_sphere.add(JupiterMoons[i]); }
+			for (i = 0; i < 10; i++) { Jupiter.add(JupiterMoons[i]); }
 
 		/**
 			*
@@ -320,11 +307,9 @@
 				new THREE.MeshBasicMaterial({ // Material
 					map: new THREE.ImageUtils.loadTexture("images/saturn.jpg")
 				})
-			)	
+			).construct_planet(1070,0,0);
 
-			let saturn_sphere = Saturn.construct_planet(1070,0,0);
-
-			PivotObjectsArray[4].add(saturn_sphere);
+			PivotObjectsArray[4].add(Saturn);
 
 		/**
 			*
@@ -359,7 +344,7 @@
 				})
 			);
 
-			for (i = 0; i < 10; i++) { saturn_sphere.add(SaturnMoons[i]); }
+			for (i = 0; i < 10; i++) { Saturn.add(SaturnMoons[i]); }
 
 		/**
 			*
@@ -374,11 +359,9 @@
 				new THREE.MeshBasicMaterial({ // Material
 					map: new THREE.ImageUtils.loadTexture("images/uranus.jpg")
 				})
-			)	
+			).construct_planet(1510,0,0);	
 
-			let uranus_sphere = Uranus.construct_planet(1510,0,0);
-
-			PivotObjectsArray[5].add(uranus_sphere);
+			PivotObjectsArray[5].add(Uranus);
 
 		/**
 			*
@@ -394,7 +377,7 @@
 				})
 			);
 
-			for (i = 0; i < 5; i++) { uranus_sphere.add(UranusMoons[i]); }
+			for (i = 0; i < 5; i++) { Uranus.add(UranusMoons[i]); }
 
 		/**
 			*
@@ -409,11 +392,9 @@
 				new THREE.MeshBasicMaterial({ // Material
 					map: new THREE.ImageUtils.loadTexture("images/neptune.jpg")
 				})
-			)	
+			).construct_planet(1980,0,0);
 
-			let neptune_sphere = Neptune.construct_planet(1980,0,0);
-
-			PivotObjectsArray[6].add(neptune_sphere);
+			PivotObjectsArray[6].add(Neptune);
 
 		
 		/**
@@ -430,7 +411,7 @@
 				})
 			);
 
-			for (i = 0; i < 10; i++) { neptune_sphere.add(NeptuneMoons[i]); }
+			for (i = 0; i < 10; i++) { Neptune.add(NeptuneMoons[i]); }
 
 		/**
 			*
@@ -445,11 +426,9 @@
 				new THREE.MeshBasicMaterial({ // Material
 					map: new THREE.ImageUtils.loadTexture("images/pluto.jpg")
 				})
-			)	
+			).construct_planet(2530,0,0);
 
-			let pluto_sphere = Pluto.construct_planet(2530,0,0);
-
-			PivotObjectsArray[7].add(pluto_sphere);
+			PivotObjectsArray[7].add(Pluto);
 
 		/**
 			*
@@ -465,7 +444,7 @@
 
 			let charon_sphere = new THREE.Mesh(charon_geometry, charon_sphere_material);
 
-			pluto_sphere.add(charon_sphere);
+			Pluto.add(charon_sphere);
 
 		/**
 			*
@@ -541,22 +520,24 @@
 
 			function render() {
 
-				sun_sphere.rotation.y += 0.006;
+				Sun.rotation.y += 0.006;
 
 				// Benchmark: 1 Earth day = 0.02
-				earth_sphere.rotation.y += 0.02;
+				Earth.rotation.y += 0.02;
 				moon_sphere.rotation.y += 0.2;
 
 				// Planets
-				mercury_sphere.rotation.y += .00034;
-				venus_sphere.rotation.y += .000082;
-				mars_sphere.rotation.y += .018;
-				jupiter_sphere.rotation.y += .045;
-				saturn_sphere.rotateZ(-0.07);
-				uranus_sphere.rotateZ(0.055); // Uranus has a special case where it rotates on 2 axes.
-				uranus_sphere.rotateX(0.08);
-				neptune_sphere.rotation.y += .0132;
-				pluto_sphere.rotation.y += 0.0033
+				Mercury.rotation.y += .00034;
+				Venus.rotation.y += -1*.000082;
+				Mars.rotation.y += .018;
+				Jupiter.rotation.y += .045;
+				Saturn.rotateZ(-0.07);
+				
+				Uranus.rotateZ(0.055); // Uranus has a special case where it rotates on 2 axes.
+				Uranus.rotateX(0.08);
+				
+				Neptune.rotation.y += .0132;
+				Pluto.rotation.y += 0.0033
 
 				// Pivot Objects
 				PivotObjectsArray[0].rotation.y += 0.024; // Mercury
