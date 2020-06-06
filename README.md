@@ -1,4 +1,7 @@
 # Mini-Space-Simulation
+A Solar System simulation written in JS with realistic scaling.
+
+## Installation
 Get a copy of the Three.js library and rename it as 'js/' and put it in the same directory as 'index.html' before running.
 
 Preferred method of running with Python:
