@@ -160,7 +160,39 @@
 				scene.add(PivotObjectsArray[i]);
 			}
 
+		/**
+			*
+			* 	Set up pivots for each moon. This is to keep the moons
+			*	with their own independent orbit.
+			*
+		**/
 
+			let MoonPivotObjects = [];
+
+			for (i = 0; i < 7; i++) {
+
+				let temp_geo = new THREE.SphereGeometry(1,1,1);
+				let temp_material = new THREE.MeshBasicMaterial({
+										color: 0x030303
+									});
+
+				MoonPivotObjects.push(new THREE.Mesh(temp_geo, temp_material));
+			}
+
+			// Set location of pivots to be pos of Earth and beyond.
+			MoonPivotObjects[0].position.set(1130,0,0); // Earth
+			MoonPivotObjects[1].position.set(1530,0,0); // Mars
+			MoonPivotObjects[2].position.set(2180,0,0); // Jupiter
+			MoonPivotObjects[3].position.set(2880,0,0); // Saturn
+			MoonPivotObjects[4].position.set(3680,0,0); // Uranus
+			MoonPivotObjects[5].position.set(4580,0,0); // Neptune
+			MoonPivotObjects[6].position.set(5580,0,0); // Pluto
+
+			// Then add to corresponding pivot object to do rotation.
+			for (i = 0; i < 7; i++) {
+				PivotObjectsArray[i+2].add(MoonPivotObjects[i]);
+			}
+			
 		/**
 			*
 			* Create Sun Sphere - Parent of Earth
@@ -236,7 +268,7 @@
 				})
 			);
 
-			for (i = 0; i < 1; i++) { Earth.add(EarthMoons[i]); }
+			for (i = 0; i < 1; i++) { MoonPivotObjects[0].add(EarthMoons[i]); }
 
 		/**
 			*
@@ -267,7 +299,7 @@
 				})
 			);
 
-			for (i = 0; i < 2; i++) { Mars.add(MarsMoons[i]); }
+			for (i = 0; i < 2; i++) { MoonPivotObjects[1].add(MarsMoons[i]); }
 
 		/**
 			*
@@ -298,7 +330,7 @@
 				})
 			);
 
-			for (i = 0; i < 10; i++) { Jupiter.add(JupiterMoons[i]); }
+			for (i = 0; i < 10; i++) { MoonPivotObjects[2].add(JupiterMoons[i]); }
 
 		/**
 			*
@@ -348,7 +380,7 @@
 				})
 			);
 
-			for (i = 0; i < 10; i++) { Saturn.add(SaturnMoons[i]); }
+			for (i = 0; i < 10; i++) { MoonPivotObjects[3].add(SaturnMoons[i]); }
 
 		/**
 			*
@@ -379,7 +411,7 @@
 				})
 			);
 
-			for (i = 0; i < 5; i++) { Uranus.add(UranusMoons[i]); }
+			for (i = 0; i < 5; i++) { MoonPivotObjects[4].add(UranusMoons[i]); }
 
 		/**
 			*
@@ -410,7 +442,7 @@
 				})
 			);
 
-			for (i = 0; i < 10; i++) { Neptune.add(NeptuneMoons[i]); }
+			for (i = 0; i < 10; i++) { MoonPivotObjects[5].add(NeptuneMoons[i]); }
 
 		/**
 			*
@@ -441,7 +473,8 @@
 				})
 			);
 
-			for (i = 0; i < 1; i++) { Pluto.add(PlutoMoons[i]); }
+			for (i = 0; i < 1; i++) { MoonPivotObjects[6].add(PlutoMoons[i]); }
+			
 
 		/**
 			*
@@ -646,13 +679,10 @@
 
 				Sun.rotation.y += 0.006;
 
-				// Benchmark: 1 Earth day = 0.02
-				Earth.rotation.y += 0.02;
-				EarthMoons[0].rotation.y += 0.2;
-
 				// Planets
 				Mercury.rotation.y += .00034;
 				Venus.rotation.y += -1*.000082;
+				Earth.rotation.y += 0.02;
 				Mars.rotation.y += .018;
 				Jupiter.rotation.y += .045;
 				Saturn.rotateZ(-0.07);
@@ -674,6 +704,8 @@
 				PivotObjectsArray[7].rotation.y += 0.000035; // Neptune
 				PivotObjectsArray[8].rotation.y += 0.000023; // Pluto
 
+				EarthMoons[0].rotation.y += 0.2;
+
 				// Mars Moon rotations
 				MarsMoons[0].rotation.y += 0.2;
 				MarsMoons[1].rotation.y += 0.2;
@@ -681,8 +713,17 @@
 				// Jupiter Moon rotations
 				var i;
 				for (i = 0; i < 10; i++) {
-					JupiterMoons[i].rotation.y += 0.4;
+
+					if (i < 5) {
+						UranusMoons[i].rotation.y += 0.2;
+					}
+					
+					JupiterMoons[i].rotation.y += 0.2;
+					SaturnMoons[i].rotation.y += 0.2;
+					NeptuneMoons[i].rotation.y += 0.2;
 				}
+
+				PlutoMoons[0].rotation.y += 0.2;
 				
 			}
 
