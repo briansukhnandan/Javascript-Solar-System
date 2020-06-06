@@ -726,6 +726,9 @@
 				
 			}
 
+			// Add event listener to resize window.
+			window.addEventListener( 'resize', onWindowResize, false );
+
 			function onWindowResize() {
 				camera.aspect = window.innerWidth / window.innerHeight;
 				camera.updateProjectionMatrix();
