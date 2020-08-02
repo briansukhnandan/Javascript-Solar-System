@@ -1,4 +1,4 @@
-# Mini-Space-Simulation
+# Javascript-Solar-System
 A Solar System simulation written in JS with realistic scaling.
 
 ## Installation
